@@ -1,0 +1,44 @@
+model:
+  base_learning_rate: 0.0001
+  scale_lr: false
+  target: cbgen.autoencoder.VQModel
+  init:
+    checkpoint: pretrained_models/llamagen/vq_ds16_c2i.pt
+    ignore_keys: ["quantize."]
+    freeze_encoder: true
+    freeze_decoder: true
+    freeze_decoder_last_layer: true
+    freeze_quant_convs: true
+  params:
+    monitor: "val/qloss"
+    embed_dim: 8
+    n_embed: 4096
+    quantize_prob: 1.0
+    p_train_random_scale: 0.9
+    normalize: true
+    quantize_iter_start: 1000
+    requant_pyramid_levels: 1  # -1 means all levels, 1 means only the top level
+    resolution: 256
+    # uses defaults for class defs
+    ddconfig: {}
+
+data:
+  target: main_train_ae.DataModuleFromConfig
+  params:
+    num_workers: 32
+    batch_size: 32
+    wrap: true
+    train:
+      target: arexper.ldm_dataset.DatasetTrain
+      params:
+        train_dir: /datasets/imagenet/ILSVRC/Data/CLS-LOC/train
+        dataset_name: imagenet
+        size: 256
+        degradation: pil_nearest
+    validation:
+      target: arexper.ldm_dataset.DatasetVal
+      params:
+        val_dir: /datasets/imagenet/ILSVRC/Data/CLS-LOC/val
+        dataset_name: imagenet
+        size: 256
+        degradation: pil_nearest

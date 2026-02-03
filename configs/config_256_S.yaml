@@ -1,0 +1,39 @@
+model:
+    img_size: 256
+    scale_ratio: 2
+    scale_min_size: 1
+    class_cond: true
+    random_block_size: true
+    random_replace: 0.1
+    random_replace_sampled: false  # "sampled" gt or just upscaled for random replace
+    use_head_mlp: false
+    num_mixing_layers: 2
+    #single_scale: false
+
+    autoenc:
+        config_path: pretrained_models/autoenc/autoencoder_config.yaml
+        checkpoint_path: pretrained_models/autoenc/checkpoint.pth
+        params:
+            requant_pyramid_levels: -1  # needed for loading pretrained from config
+
+    llama_config:
+        hidden_size: 512
+        intermediate_size: 1536
+        num_attention_heads: 16
+        num_hidden_layers: 12
+
+args:
+    batch_size: 128
+    lr: 1.e-4
+    lr_step_factor: 0.3162278
+    warmup_epochs: 1
+    optimizer: adamw
+    weight_decay: 0.01
+    num_workers: 8
+    data_path: data/imagenet
+    lr_schedule: step
+    epochs: 110
+    lr_step_epochs: [100, 105]
+    eval_freq: 5
+    cfg: 2.0
+    cfg_start_step: 5
