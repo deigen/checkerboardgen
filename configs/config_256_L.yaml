@@ -2,6 +2,7 @@ model:
     img_size: 256
     scale_ratio: 2
     class_cond: true
+    num_classes: 1000
     random_block_size: true
     random_replace: 0.1
     random_replace_sampled: false  # "sampled" gt or just upscaled for random replace

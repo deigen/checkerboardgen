@@ -148,6 +148,9 @@ def main(args):
     value_prob_map = value_prob_map.cpu().numpy()  # B, H, W
     position_entropy = position_entropy.cpu().numpy()  # B, H, W
 
+    if not os.path.exists(args.output_dir):
+        os.makedirs(args.output_dir)
+
     mont = torchvision.utils.make_grid(
         torch.as_tensor(samples_uint8).permute(0,3,1,2),
         nrow=int(np.sqrt(len(samples))), padding=2, normalize=False

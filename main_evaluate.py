@@ -43,27 +43,18 @@ def main(args):
 
     checkpoint_dir = os.path.dirname(checkpoint_path)
 
-    train_args_fn = os.path.join(checkpoint_dir, 'args.yaml')
     config_fn = os.path.join(checkpoint_dir, 'config.yaml')
 
-    if not os.path.isfile(train_args_fn):
-        raise ValueError(f"Train args {train_args_fn} does not exist")
     if not os.path.isfile(config_fn):
         raise ValueError(f"Config {config_fn} does not exist")
 
-    train_args = yaml.safe_load(open(train_args_fn, 'r'))
     config = yaml.safe_load(open(config_fn, 'r'))
 
-    model = ar.AR(**config['model'], num_classes=train_args.get('num_classes', 1000))
+    model = ar.AR(**config['model'])
     model.num_blocks_per_scale = args.steps_per_scale
 
-    #if model.scale_ratio < 2:
-    #    args.eval_batch_size = min(args.eval_batch_size, 64)
-
-    args.data_path = train_args['data_path']
-
-    if args.eval_reference_data_path is None:
-        args.eval_reference_data_path = os.path.join(args.data_path, 'eval_reference')
+    if args.eval_reference_data_path is None and not args.samples_only:
+        raise ValueError("Must provide --eval_reference_data_path unless --samples_only is set")
 
     checkpoint = torch.load(checkpoint_path, map_location='cpu', weights_only=False)
     model.load_state_dict(checkpoint['model_ema' if args.use_ema else 'model'], strict=True)

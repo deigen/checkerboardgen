@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 CHECKPOINT="pretrained_models/checkerboard-L-2x/checkpoint-last.pth"
 CFG=1.5
 CFG_START_STEP=5
@@ -19,7 +21,7 @@ python main_evaluate.py \
         --checkpoint $CHECKPOINT \
         --cfg $CFG \
         --cfg_start_step $CFG_START_STEP \
-        --num_blocks $NUM_STEPS_PER_SCALE \
+        --steps_per_scale $NUM_STEPS_PER_SCALE \
         --keep_samples \
         --samples_only \
         --eval_num_samples $NUM_SAMPLES \

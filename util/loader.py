@@ -60,7 +60,7 @@ def create_vq_cache_v2(
         num_workers: Number of worker threads for prefetching images from disk
         device: Device to run encoding on
 
-    Cache format (v3):
+    Cache format:
         - Tensors saved to {cache_filepath}_shard_XXXX.safetensors (sharded safetensors)
         - Metadata saved to {cache_filepath}_metadata.json
         - Format: 2 tensors per entry (1 entry per image)
@@ -268,7 +268,7 @@ def create_vq_cache_v2(
 
 def cached_vq_collate_fn(batch):
     """
-    Custom collate function for CachedVQDataset (v3 format).
+    Custom collate function for CachedVQDataset
 
     Args:
         batch: list of tuples ((q_inds,), label)

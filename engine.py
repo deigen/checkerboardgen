@@ -176,7 +176,7 @@ def train_one_epoch(model,
 
 @torch.no_grad()
 def evaluate(model, device, epoch, log_writer, args, balance_labels=True, temperature=None, cfg=None, cfg_start_step=None):
-    if args.eval_reference_data_path is None:
+    if args.eval_reference_data_path is None and not args.samples_only:
         raise ValueError("args.eval_reference_data_path must be specified for evaluation.")
     temperature = temperature if temperature is not None else args.temperature
     cfg = cfg if cfg is not None else args.cfg

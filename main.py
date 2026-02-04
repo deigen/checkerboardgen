@@ -224,16 +224,17 @@ def main():
 
     # Handle VQ cache creation/loading
     if args.use_cache or args.create_cache:
-        # New cache system (v2)
         split = 'train'
         dsname = os.path.relpath(args.data_path, './data').replace('/', '_').replace('.', '_').strip('_')
 
         # Build cache filename based on autoencoder config
         autoenc_config = config['model']['autoenc']
         autoenc_name = autoenc_config.get('checkpoint_path', 'unknown').replace('/', '_')  # Extract name from path
+        # this creates a cache with all the different scales that we might use for models
+        # to speed up creation and make the cache smaller, include just the scales needed for the model
         all_scale_sizes = [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 13, 16]
         scales_key = ''.join(map(str, all_scale_sizes))
-        cache_key = f'cached_data_{img_size}_{autoenc_name}_{scales_key}_v3'
+        cache_key = f'cached_data_{img_size}_{autoenc_name}_{scales_key}_v2'
         cache_filepath = os.path.join(args.cached_path, dsname, split, f'{cache_key}.safetensors')
 
         data_path = os.path.join(args.data_path, split)
@@ -244,7 +245,6 @@ def main():
             assert config['model'].get('scale_min_size', 1) == 1, \
                 'creating cache should use scale_min_size=1 for full pyramid'
             model = ar.AR(
-                num_classes=1000,
                 **config['model']
             )
             autoenc = model.autoenc
@@ -320,13 +320,14 @@ def main():
     )
 
     # create model
-    num_classes = 0
-    if hasattr(dataset_train, 'classes') and dataset_train.classes:
-        num_classes = len(dataset_train.classes)
-    elif hasattr(dataset_train, 'num_classes'):
-        num_classes = dataset_train.num_classes
+    if config['model']['class_cond']:
+        ds_num_classes = 0
+        if hasattr(dataset_train, 'classes') and dataset_train.classes:
+            ds_num_classes = len(dataset_train.classes)
+        elif hasattr(dataset_train, 'num_classes'):
+            ds_num_classes = dataset_train.num_classes
+        assert ds_num_classes == config['model']['num_classes']
     model = ar.AR(
-        num_classes=num_classes,
         **config['model']
     )
 
