@@ -63,6 +63,19 @@ python main.py --config configs/config_256_S.yaml
 This assumes you have imagenet downloaded and linked to `data/imagenet`.
 Adjust the config file as needed for different datasets or model configurations.
 
+### Training Data Cache
+
+To speed up training, you can create a cached version of the training data, using
+
+```bash
+python main.py --config configs/config_256_S.yaml --create_cache --batch_size 32
+```
+
+and then use it with the `--use_cache` flag during training.
+
+This creates a cache with all of the scales used for experiments in the paper.  To
+only cache scales used in one model config, see the code in main.py.
+
 
 ## Evaluation
 
@@ -87,7 +100,7 @@ layer as described in our paper, using the pretrained weights from LlamaGen
 
 ## Errata
 
-- We use the standard reference set for FID/IS evals, not the full ImageNet validation set as stated in the paper (v1).
+- We use the standard reference set for FID evals, not the full ImageNet validation set as mentioned in the paper (v1).
 
 
 ## Citation
