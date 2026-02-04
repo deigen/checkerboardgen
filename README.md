@@ -11,7 +11,7 @@ Progressive Checkerboards for Autoregressive Multiscale Image Generation
 
 
 Code and pretrained models, as described in the paper:
-[Progressive Checkerboards for Autoregressive Multiscale Image Generation](TODO).
+[Progressive Checkerboards for Autoregressive Multiscale Image Generation](http://arxiv.org/abs/2602.03811).
 
 This codebase is based on a combination of several prior codebases including:
 
@@ -85,6 +85,11 @@ layer as described in our paper, using the pretrained weights from LlamaGen
 [link](https://huggingface.co/FoundationVision/LlamaGen/resolve/main/vq_ds16_c2i.pt) [page](https://github.com/FoundationVision/LlamaGen/?tab=readme-ov-file#-class-conditional-image-generation-on-imagenet).
 
 
+## Errata
+
+- We use the standard reference set for FID/IS evals, not the full ImageNet validation set as stated in the paper (v1).
+
+
 ## Citation
 
 If you find this code useful for your research, please consider citing the following paper:
@@ -93,7 +98,7 @@ If you find this code useful for your research, please consider citing the follo
 @article{progcheck2026,
   title={Progressive Checkerboards for Autoregressive Multiscale Image Generation},
   author={David Eigen},
-  journal={arXiv preprint arXiv:XXXX.XXXXX},
+  journal={arXiv preprint arXiv:2602.03811},
   year={2026}
 }
 ```
