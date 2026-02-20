@@ -77,9 +77,8 @@ def main(args):
 
     assert args.checkpoint, 'Checkpoint is required for sampling'
     checkpoint = torch.load(args.checkpoint, map_location='cpu', weights_only=False)
-    num_classes = checkpoint['model']['class_embeddings.weight'].shape[0] - 1  # -1 for unconditional class
 
-    model = ar.AR(num_classes=num_classes, **config['model'])
+    model = ar.AR(**config['model'])
     model.load_state_dict(checkpoint['model_ema' if args.use_ema else 'model'], strict=True)
     del checkpoint
 
