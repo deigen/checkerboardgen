@@ -24,16 +24,24 @@ This codebase is based on a combination of several prior codebases including:
 
 ## Download Pretrained Models
 
-Pretrained models are available at the following links:
+Pretrained models are available on HuggingFace at [deigen/checkerboardgen](https://huggingface.co/deigen/checkerboardgen).
+
+To download them, you can use the download.sh script:
+
+```bash
+bash pretrained_models/download.sh
+```
 
 
-| Model              | Download Link                      |
-|--------------------|------------------------------------|
-| Autoencoder        | [link](https://drive.google.com/drive/folders/1GO5tmufbMX7h4Goy-6y0cd7Efm80m-2C) |
-| Checkerboard-L-2x  | [link](https://drive.google.com/drive/folders/1B8G8Sg2hydqTITTGKRvHFDmwwam5ZT-V) |
-| Checkerboard-L-4x  | [link](https://drive.google.com/drive/folders/1H-GEy9o4OcgHDUIG2XDVrh19r5k4znYK) |
+And also available at the following links:
 
-To download and set up the pretrained models, create the following directories:
+| Model              | Google Drive                       | HuggingFace                        |
+|--------------------|------------------------------------|------------------------------------|
+| Autoencoder        | [gdrive](https://drive.google.com/drive/folders/1GO5tmufbMX7h4Goy-6y0cd7Efm80m-2C) | [hf](https://huggingface.co/deigen/checkerboardgen/tree/main/pretrained_models/autoenc) |
+| Checkerboard-L-2x  | [gdrive](https://drive.google.com/drive/folders/1B8G8Sg2hydqTITTGKRvHFDmwwam5ZT-V) | [hf](https://huggingface.co/deigen/checkerboardgen/tree/main/pretrained_models/checkerboard-L-2x) |
+| Checkerboard-L-4x  | [gdrive](https://drive.google.com/drive/folders/1H-GEy9o4OcgHDUIG2XDVrh19r5k4znYK) | [hf](https://huggingface.co/deigen/checkerboardgen/tree/main/pretrained_models/checkerboard-L-4x) |
+
+To download by hand, create the following directories:
 
 ```bash
 mkdir -p pretrained_models/autoencoder
